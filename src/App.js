@@ -23,7 +23,7 @@ function App() {
   var userEmail = "";
   var registrantToken = "";
   var zakToken = "";
-  var leaveUrl = "http://localhost:3000?meetingEnded=true";
+  var leaveUrl = `${window.location.origin}?meetingEnded=true`;
   const SDK_KEY = "pYYW4T4l8wtgdt88O2V01ziMIEkXXJId5Gog";
   const SDK_SECRET = "qnUQzrSdNnWZWURAdrKHs8MhMZ3IisQFWfay";
   function getSignature(e) {

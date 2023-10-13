@@ -1,12 +1,7 @@
 {
-  "name": "meetingsdk-sample-react",
+  "name": "meetingsdk-zoom",
   "version": "2.16.0",
   "author": "Zoom Video Communications, Inc.",
-  "contributors": [
-    {
-      "name": "Tommy Gaessler"
-    }
-  ],
   "homepage": "",
   "private": true,
   "dependencies": {
@@ -44,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

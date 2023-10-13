@@ -26,7 +26,6 @@ function App() {
   var leaveUrl = "http://localhost:3000?meetingEnded=true";
   const SDK_KEY = "pYYW4T4l8wtgdt88O2V01ziMIEkXXJId5Gog";
   const SDK_SECRET = "qnUQzrSdNnWZWURAdrKHs8MhMZ3IisQFWfay";
-  debugger;
   function getSignature(e) {
     //e.preventDefault();
     ZoomMtg.generateSDKSignature({
@@ -75,7 +74,6 @@ function App() {
           success: (success) => {
             console.log(success);
             ZoomMtg.showInviteFunction({ show: false });
-            ZoomMtg.lea;
           },
           error: (error) => {
             console.log(error);
@@ -89,8 +87,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (searchParams.meetingEnded == "true") {
-      window.history.back();
+    debugger;
+    if (searchParams.get("meetingEnded") == "true") {
+      //window.parent.history.back();
+      window.parent.close();
     } else {
       getSignature();
     }

@@ -11,6 +11,7 @@ This repo is a [React](https://reactjs.org/) app generated via [Vite](https://vi
 
 To get started, clone the repo:
 
+
 `$ git clone https://github.com/zoom/meetingsdk-react-sample.git`
 
 ## Setup

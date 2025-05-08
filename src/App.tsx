@@ -41,6 +41,8 @@ function App() {
       leaveUrl: leaveUrl,
       patchJsMedia: true,
       leaveOnPageUnload: true,
+      disableInvite: true,
+      meetingInfo: [],
       success: () => {
         // can this be async?
         ZoomMtg.join({

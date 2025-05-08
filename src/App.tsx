@@ -26,6 +26,7 @@ function generateSignature(meetingNumber: string) {
   const sHeader = JSON.stringify(header);
   const sPayload = JSON.stringify(payload);
 
+  // @ts-expect-error - jws is not typed
   return KJUR.jws.JWS.sign("HS256", sHeader, sPayload, SDK_SECRET);
 }
 

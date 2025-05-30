@@ -1,46 +1,33 @@
 import { useEffect } from "react";
 import "./App.css";
 import { ZoomMtg } from "@zoom/meetingsdk";
-import KJUR from "jsrsasign";
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
 
 const SDK_KEY = process.env.VITE_SDK_KEY ?? "";
-const SDK_SECRET = process.env.VITE_SDK_SECRET ?? "";
-
-function generateSignature(meetingNumber: string) {
-  const iat = Math.round(new Date().getTime() / 1000) - 30;
-  const exp = iat + 60 * 60 * 2;
-  const header = { alg: "HS256", typ: "JWT" };
-
-  const payload = {
-    appKey: SDK_KEY,
-    mn: meetingNumber,
-    role: 0,
-    iat: iat,
-    exp: exp,
-    tokenExp: exp,
-  };
-
-  const sHeader = JSON.stringify(header);
-  const sPayload = JSON.stringify(payload);
-
-  // @ts-expect-error - jws is not typed
-  return KJUR.jws.JWS.sign("HS256", sHeader, sPayload, SDK_SECRET);
-}
+const BASE_URL = process.env.VITE_BASE_URL ?? "";
 
 function App() {
   const leaveUrl = `${window.location.origin}?meetingEnded=true`;
 
-  const getSignatureFromSDK = () => {
+  const getSignatureFromSDK = async () => {
     const searchParams = new URLSearchParams(window.location.search);
     const meetingNumber = searchParams.get("meetingNumber") ?? "";
-    const signature = generateSignature(meetingNumber);
-    startMeeting(signature);
+    const role = searchParams.get("role") ?? "0";
+    const response = await fetch(`${BASE_URL}/api/v1/zoom-auth/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        meetingNumber: meetingNumber,
+        role: role,
+      }),
+    });
+    const data = await response.json();
+    startMeeting(data.signature);
   };
 
-  function startMeeting(signature: string) {
+  const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
     const searchParams = new URLSearchParams(window.location.search);
     const meetingNumber = searchParams.get("meetingNumber") ?? "";
@@ -73,7 +60,7 @@ function App() {
         console.log("error while initializing", error);
       },
     });
-  }
+  };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);

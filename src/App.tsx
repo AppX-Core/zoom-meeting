@@ -33,7 +33,7 @@ function App() {
     const meetingNumber = searchParams.get("meetingNumber") ?? "";
     const passWord = searchParams.get("password") ?? "";
     const userName = searchParams.get("userName") ?? "guest";
-    const userEmail = searchParams.get("userEmail") ?? `${userName}@gmail.com`;
+    const userEmail = searchParams.get("userEmail") ?? `${userName.replace(" ", "_")}@gmail.com`;
 
     ZoomMtg.init({
       leaveUrl: leaveUrl,
